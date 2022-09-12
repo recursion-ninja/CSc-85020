@@ -38,18 +38,20 @@ Basic understanding of computer systems will help in understanding the applicati
 
 Your grade will be computed based on:
 
-  -   Class presentation (15%)
-  -   Research project with intermediate milestones (60%)
-  -   Homework (15%)
-  -   Class participation (10%)
+  -   **(15%)**: Class presentation
+  -   **(60%)**: Research project with intermediate milestones
+  -   **(15%)**: Homework
+  -   **(10%)**: Class participation
 
 Your final letters will generally be converted from your grade using the following rules:
 
-  `A+`: >= 95%, A: \[90%, 95%), A-: \[85%, 90%)
-  `B+`: [80%, 85%), B: \[75%, 80%); , B-: \[70%, 75%)
-  `C+`: [66%, 70%), C: \[63%, 66%), C-: \[60%, 63%)
-  `D+`: [56%, 60%), D:\[53%, 56%), D-: \[50%, 53%)
-  `F `: < 50%
+  | **`+`** |       Range      | **`~`** |       Range      | **`-`** |       Range      |
+  |:--------|:----------------:|:--------|:----------------:|:--------|:----------------:|
+  | **A+**  | [ `95%`, `+∞%` ) |  **A**  | [ `90%`, `95%` ) | **A-**  | [ `85%`, `90%` ) |
+  | **B+**  | [ `80%`, `85%` ) |  **B**  | [ `75%`, `80%` ) | **B-**  | [ `70%`, `75%` ) |
+  | **C+**  | [ `66%`, `70%` ) |  **C**  | [ `63%`, `66%` ) | **C-**  | [ `60%`, `63%` ) |
+  | **D+**  | [ `56%`, `60%` ) |  **D**  | [ `53%`, `56%` ) | **D-**  | [ `50%`, `53%` ) |
+  | **F**   | ( `-∞%`, `50%` ) |         |                  |         |                  |
 
 
 #### (Tentative) Topics
