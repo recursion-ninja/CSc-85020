@@ -1,0 +1,78 @@
+%This is my super simple Real Analysis Homework template
+
+\documentclass{CUNY-assignment}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	%	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+	top=20mm,
+}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{mathrsfs} % https://www.ctan.org/pkg/mathrsfs
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+\usepackage{nicematrix}
+
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+
+\title{CSc 85020 - Coding Theory\\ Assignment 1}
+\author{Alex Washburn}
+\date\today
+%This information doesn't actually show up on your document unless you use the maketitle command below
+
+\AssignmentNumber{1}%
+\CourseName{Coding Theory}
+\CourseNumber{85020}
+\StudentName{Alex Washburn}
+
+\begin{document}
+\CoverPage
+\Problem{%
+Find the generator matrix of a $r$-way repetition code.%
+}%
+
+Suppose we have messages of length $k$, and wish to use a $r$-way repetition code to produce codewords of length $k * r$.
+The constructed generator matrix with dimensions $k \times (k*r)$ will take the following form:
+
+\newcommand{\VD}{\Vdots}
+\newcommand{\R}{\rotate}
+\newcommand{\BO}{\ensuremath{\mathbf{1}}}
+\setcounter{MaxMatrixCols}{32}
+\NiceMatrixOptions{code-for-first-row = \color{darkgray},
+	code-for-first-col = \color{darkgray},
+	code-for-last-row = \color{green},
+	code-for-last-col = \color{magenta},
+	cell-space-limits = 1pt
+}
+
+\[\begin{pNiceMatrix}%
+[margin,name=mymatrix,first-row,first-col,nullify-dots]
+ ~  & \R 1& \R 2& \R 3& \Cdots & \R k&\R k+1&\R k+2&\R k+3& \Cdots &\R k*2& \overbrace{\hdots\hdots}^{\rotatebox{90}{\ensuremath{(k-2)*r}}} &\R k*r-(k-1)&\R k*r-(k-2)&\R k*r-(k-3)& \Cdots &\R k*r\\
+ 1 & \BO &  0  &  0  & \Cdots &  0  & \BO  &  0   &  0   & \Cdots &  0   &            \hdots\hdots          & \BO        &  0         &  0         & \Cdots &  0   \\
+ 2  &  0  & \BO &  0  & \Cdots &  0  &  0   & \BO  &  0   & \Cdots &  0   &            \hdots\hdots          &  0         & \BO        &  0         & \Cdots &  0   \\
+ 3  &  0  &  0  & \BO & \Cdots &  0  &  0   &  0   & \BO  & \Cdots &  0   &            \hdots\hdots          &  0         &  0         & \BO        & \Cdots &  0   \\
+\VD & \VD & \VD & \VD & \Ddots & \VD & \VD  & \VD  & \VD  & \Ddots & \VD  &            \hdots\hdots          & \VD        & \VD        & \VD        & \Ddots & \VD  \\
+ k  &  0  &  0  &  0  & \Cdots & \BO &  0   &  0   &  0   & \Cdots & \BO  &            \hdots\hdots          &  0         &  0         &  0         & \Cdots & \BO  \\
+\end{pNiceMatrix}\]
+
+
+\Problem{%
+Write the parity check matrix of the Hamming code with $r=4$.%
+}%
+
+\Problem{%
+Construct a standard array for the binary linear code with generator matrix $G = \left[\begin{smallmatrix}
+	1 & 2 & 3\\
+	a & b & c
+\end{smallmatrix}\right]$. Then decode the words \texttt{11111} and \texttt{10000}.%
+}%
+
+\end{document}
