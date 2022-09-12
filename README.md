@@ -1,4 +1,6 @@
-### CSc 85020 ST: Theoretical Computer Science (Coding Theory)
+## CSc 85020 
+
+### ST: Theoretical Computer Science (Coding Theory)
 
 
 #### Overview
@@ -43,11 +45,11 @@ Your grade will be computed based on:
 
 Your final letters will generally be converted from your grade using the following rules:
 
-  -   A+: &gt;= 95%, A: \[90%, 95%), A-: \[85%, 90%)
-  -   B+: \[80%, 85%), B: \[75%, 80%); , B-: \[70%, 75%)
-  -   C+: \[66%, 70%), C: \[63%, 66%), C-: \[60%, 63%)
-  -   D+: \[56%, 60%), D:\[53%, 56%), D-: \[50%, 53%)
-  -   F: &lt; 50%
+  `A+`: >= 95%, A: \[90%, 95%), A-: \[85%, 90%)
+  `B+`: [80%, 85%), B: \[75%, 80%); , B-: \[70%, 75%)
+  `C+`: [66%, 70%), C: \[63%, 66%), C-: \[60%, 63%)
+  `D+`: [56%, 60%), D:\[53%, 56%), D-: \[50%, 53%)
+  `F `: < 50%
 
 
 #### (Tentative) Topics
@@ -65,26 +67,25 @@ Your final letters will generally be converted from your grade using the followi
 
 *Note: topics of future classes are tentative and subject to change.*
 
-  |--------------|----------------------------------------|
   | Date         | Details                                |
-  |:-------------|:---------------------------------------|
-  | August 31    | Overview Coding Theory (0)             |
-  | September 7  | Coding theory (1)                      |
+  |-------------:|:---------------------------------------|
+  |    August 31 | Overview Coding Theory (0)             |
+  | September 07 | Coding theory (1)                      |
   | September 14 | Coding theory (2)                      |
   | September 21 | Coding theory (3)                      |
   | September 28 | Coding theory (4)                      |
-  | October 5    | No class scheduled                     |
-  | October 12   | Network coding and its applications    |
-  | October 19   | Paper presentation                     |
-  | October 26   | Proposal presentation                  |
-  | November 2   | Coding for distributed storage systems |
-  | November 9   | Paper presentation                     |
-  | November 16  | Coded computing                        |
-  | November 23  | Paper presentation                     |
-  | November 30  | Final presentation                     |
-  | December 7   | Final presentation                     |
-  | December 14  | Reading Day                            |
-  | December 21  | Final Paper Due                        |
+  |   October 05 | No class scheduled                     |
+  |   October 12 | Network coding and its applications    |
+  |   October 19 | Paper presentation                     |
+  |   October 26 | Proposal presentation                  |
+  |  November 02 | Coding for distributed storage systems |
+  |  November 09 | Paper presentation                     |
+  |  November 16 | Coded computing                        |
+  |  November 23 | Paper presentation                     |
+  |  November 30 | Final presentation                     |
+  |  December 07 | Final presentation                     |
+  |  December 14 | Reading Day                            |
+  |  December 21 | Final Paper Due                        |
 
 
 #### Policies
