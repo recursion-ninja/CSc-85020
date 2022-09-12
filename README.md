@@ -1,4 +1,5 @@
-## CSc 85020 ST: Theoretical Computer Science (Coding Theory)
+### CSc 85020 ST: Theoretical Computer Science (Coding Theory)
+
 
 #### Overview
 
@@ -11,98 +12,80 @@ As such, this course should be of interest to both students interested in comput
 
 The course will be structured around lectures by the instructor and paper reading/presentations by the students with open discussions.
 
+
 #### Course Information
 
--   **Term**: Fall 2022
--   **Instructor**: [Jun Li](https://phantom.cs.qc.cuny.edu/li/)
--   **Email**: [jun.li@qc.cuny.edu](mailto:jun.li@qc.cuny.edu)
--   **Schedule**: W 11:45 am - 1:45 pm
--   **Room**: GradCenter 6421
--   **Office Hours**: TBD
--   **Course Website**: [https://phantom.cs.qc.cuny.edu/li/CT](https://phantom.cs.qc.cuny.edu/li/CT) (all general information about the course will be posted here except the materials below)
--   **Assignments & Grades**: Blackboard
--   **Announcements & Discussion**: Microsoft Teams
+  -   **Term**: Fall 2022
+  -   **Instructor**: [Jun Li](https://phantom.cs.qc.cuny.edu/li/)
+  -   **Email**: [jun.li@qc.cuny.edu](mailto:jun.li@qc.cuny.edu)
+  -   **Schedule**: W 11:45 am - 1:45 pm
+  -   **Room**: GradCenter 6421
+  -   **Office Hours**: TBD
+  -   **Course Website**: [https://phantom.cs.qc.cuny.edu/li/CT](https://phantom.cs.qc.cuny.edu/li/CT) (all general information about the course will be posted here except the materials below)
+  -   **Assignments & Grades**: Blackboard
+  -   **Announcements & Discussion**: Microsoft Teams
+
 
 #### Prerequisites
 
 Basic understanding of probability (e.g., conditional probability) and basic understanding of linear algebra (e.g., matrix inverse, transpose) will be assumed.
 Basic understanding of computer systems will help in understanding the application context better.
 
+
 #### Grading Rules
 
 Your grade will be computed based on:
 
--   Class presentation (15%)
--   Research project with intermediate milestones (60%)
--   Homework (15%)
--   Class participation (10%)
+  -   Class presentation (15%)
+  -   Research project with intermediate milestones (60%)
+  -   Homework (15%)
+  -   Class participation (10%)
 
 Your final letters will generally be converted from your grade using the following rules:
 
--   A+: &gt;= 95%, A: \[90%, 95%), A-: \[85%, 90%)
--   B+: \[80%, 85%), B: \[75%, 80%); , B-: \[70%, 75%)
--   C+: \[66%, 70%), C: \[63%, 66%), C-: \[60%, 63%)
--   D+: \[56%, 60%), D:\[53%, 56%), D-: \[50%, 53%)
--   F: &lt; 50%
+  -   A+: &gt;= 95%, A: \[90%, 95%), A-: \[85%, 90%)
+  -   B+: \[80%, 85%), B: \[75%, 80%); , B-: \[70%, 75%)
+  -   C+: \[66%, 70%), C: \[63%, 66%), C-: \[60%, 63%)
+  -   D+: \[56%, 60%), D:\[53%, 56%), D-: \[50%, 53%)
+  -   F: &lt; 50%
+
 
 #### (Tentative) Topics
 
--   Introduction to erasure and error-correcting codes and fast implementations
+  -   Introduction to erasure and error-correcting codes and fast implementations
+  -   Erasure codes for disk-based storage systems: classical and modern storage codes and system level tradeoffs in erasure-coded storage systems
+  -   Codes for newer storage media such as flash devices and system-level tradeoffs in coding for distributed SSD storage systems
+  -   Codes for reducing tail latency in distributed caching and machine learning systems
+  -   Coded shuffle for distributed computation (e.g., for MapReduce/Spark)
+  -   Using machine learning to designing erasure and error-correcting-codes
+  -   More topics will be added based on the interest of the class
 
--   Erasure codes for disk-based storage systems: classical and modern storage codes and system level tradeoffs in erasure-coded storage systems
-
--   Codes for newer storage media such as flash devices and system-level tradeoffs in coding for distributed SSD storage systems
-
--   Codes for reducing tail latency in distributed caching and machine learning systems
-
--   Coded shuffle for distributed computation (e.g., for MapReduce/Spark)
-
--   Using machine learning to designing erasure and error-correcting-codes
-
--   More topics will be added based on the interest of the class
 
 #### (Tentative) Course Schedule
 
 *Note: topics of future classes are tentative and subject to change.*
 
-  ----------------------------------------------------------------------------
-  Date                                Details
-  ----------------------------------- ----------------------------------------
-  August 31                           [Overview Coding Theory (0)](slides/L01.pdf)
+  |--------------|----------------------------------------|
+  | Date         | Details                                |
+  |:-------------|:---------------------------------------|
+  | August 31    | Overview Coding Theory (0)             |
+  | September 7  | Coding theory (1)                      |
+  | September 14 | Coding theory (2)                      |
+  | September 21 | Coding theory (3)                      |
+  | September 28 | Coding theory (4)                      |
+  | October 5    | No class scheduled                     |
+  | October 12   | Network coding and its applications    |
+  | October 19   | Paper presentation                     |
+  | October 26   | Proposal presentation                  |
+  | November 2   | Coding for distributed storage systems |
+  | November 9   | Paper presentation                     |
+  | November 16  | Coded computing                        |
+  | November 23  | Paper presentation                     |
+  | November 30  | Final presentation                     |
+  | December 7   | Final presentation                     |
+  | December 14  | Reading Day                            |
+  | December 21  | Final Paper Due                        |
 
-  September 7                         Coding theory (1)
-
-  September 14                        Coding theory (2)
-
-  September 21                        Coding theory (3)
-
-  September 28                        Coding theory (4)
-
-  October 5                           No class scheduled
-
-  October 12                          Network coding and its applications
-
-  October 19                          Paper presentation
-
-  October 26                          Proposal presentation
-
-  November 2                          Coding for distributed storage systems
-
-  November 9                          Paper presentation
-
-  November 16                         Coded computing
-
-  November 23                         Paper presentation
-
-  November 30                         Final presentation
-
-  December 7                          Final presentation
-
-  December 14                         Reading Day
-
-  December 21                         Final Paper Due
-
-  ----------------------------------------------------------------------------
 
 #### Policies
 
@@ -132,6 +115,7 @@ Possible sanctions include but are not limited to, the following:
 If you are unwilling to consent to have your profile or video image recorded, be sure to keep your camera off and do not use a profile image.
 Likewise, students who un-mute during class and participate orally are agreeing to have their voices recorded.
 If you are not willing to consent to have your voice recorded during class, you will need to keep your mute button activated and communicate exclusively using the "chat" feature, which allows students to type questions and comments live.
+
 
 #### References
 
