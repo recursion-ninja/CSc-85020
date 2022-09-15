@@ -139,7 +139,7 @@ padding-right=16mm,
 padding-left=16mm,
 padding-bottom=6mm
 ]
-\raggedsection\@hangfrom{#3}{~\\[2mm]\Large\textbf{#4}}%
+\raggedsection#3~\\[2mm]\Large\textbf{#4}%
 \end{longfbox}%
 \end{adjustwidth}%
 }{\@hangfrom{\hskip #2#3}{#4}}

@@ -1,14 +1,6 @@
 %This is my super simple Real Analysis Homework template
 
 \documentclass{CUNY-assignment}
-\usepackage{geometry}
-\geometry{
-	a4paper,
-	%	total={170mm,257mm},
-	left=20mm,
-	right=20mm,
-	top=20mm,
-}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{enumitem}
@@ -22,6 +14,10 @@
 \setlength{\belowdisplayskip}{1pt}
 \setlength{\abovedisplayshortskip}{1pt}
 \setlength{\belowdisplayshortskip}{1pt}
+
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
 
 \title{CSc 85020 - Coding Theory\\ Assignment 1}
 \author{Alex Washburn}
@@ -40,11 +36,14 @@ Find the generator matrix of a $r$-way repetition code.%
 }%
 
 Suppose we have messages of length $k$, and wish to use a $r$-way repetition code to produce codewords of length $k * r$.
-The constructed generator matrix with dimensions $k \times (k*r)$ will take the following form:
+The constructed generator matrix $\mathbf{G}$ will have dimensions $\langle\, k \times (k*r) \,\rangle$. We can construct $\mathbf{G}$ by concatenating $r$ identity matrices $I_{k}$. In general, the construction\footnote[2]{The diagonal $1$ values of the identity matrices are in bold face for clarity.} of $\mathbf{G}$ will take the following form:
 
+\newcommand{\CodeSchema}[4]{\ensuremath{\boldsymbol{\bigl(\bigr.}\,#1,~#2,~#3\,\boldsymbol{\bigl.\bigr)}_{#4}}}
 \newcommand{\VD}{\Vdots}
-\newcommand{\R}{\rotate}
+\newcommand{\R}[1]{\rotate~#1}
+\newcommand{\C}[1]{#1\hspace*{1mm}}
 \newcommand{\BO}{\ensuremath{\mathbf{1}}}
+\newcommand{\slim}{\mkern-8mu}
 \setcounter{MaxMatrixCols}{32}
 \NiceMatrixOptions{code-for-first-row = \color{darkgray},
 	code-for-first-col = \color{darkgray},
@@ -53,9 +52,9 @@ The constructed generator matrix with dimensions $k \times (k*r)$ will take the 
 	cell-space-limits = 1pt
 }
 
-\[\begin{pNiceMatrix}%
-[margin,name=mymatrix,first-row,first-col,nullify-dots]
- ~  & \R 1& \R 2& \R 3& \Cdots & \R k&\R k+1&\R k+2&\R k+3& \Cdots &\R k*2& \overbrace{\hdots\hdots}^{\rotatebox{90}{\ensuremath{(k-2)*r}}} &\R k*r-(k-1)&\R k*r-(k-2)&\R k*r-(k-3)& \Cdots &\R k*r\\
+\[\mathbf{G}\quad=\quad\begin{pNiceMatrix}%
+[margin,name=RepetitionCode,first-row,first-col,nullify-dots]
+ ~  & \R 1& \R 2& \R 3& \Cdots & \R k&\R k+1&\R k+2&\R k+3& \Cdots &\R k*2& \overbrace{\hdots\hdots}^{\rotatebox{90}{\ensuremath{(k-3)*r}}} &\R k*r-(k-1)&\R k*r-(k-2)&\R k*r-(k-3)& \Cdots &\R k*r\\
  1 & \BO &  0  &  0  & \Cdots &  0  & \BO  &  0   &  0   & \Cdots &  0   &            \hdots\hdots          & \BO        &  0         &  0         & \Cdots &  0   \\
  2  &  0  & \BO &  0  & \Cdots &  0  &  0   & \BO  &  0   & \Cdots &  0   &            \hdots\hdots          &  0         & \BO        &  0         & \Cdots &  0   \\
  3  &  0  &  0  & \BO & \Cdots &  0  &  0   &  0   & \BO  & \Cdots &  0   &            \hdots\hdots          &  0         &  0         & \BO        & \Cdots &  0   \\
@@ -68,11 +67,73 @@ The constructed generator matrix with dimensions $k \times (k*r)$ will take the 
 Write the parity check matrix of the Hamming code with $r=4$.%
 }%
 
+All Hamming codes take the form $\CodeSchema{2^{r} - 1}{2^{r} - 1 - r}{3}{2}$.
+The Hamming code with $r=4$ has the form:
+\[ \CodeSchema{2^{4} - 1}{2^{4} - 1 - 4}{3}{2} = \CodeSchema{15}{11}{3}{2} \]
+
+All Hamming codes are linear codes and also binary codes, therefore:
+
+\begin{enumerate}
+
+	\item Both the generator matrix $\mathbf{G}$ and parity check matrix $\mathbf{H}$ exist.
+
+	\item $\mathbf{G}$ and $\mathbf{H}$ have dimensions $\langle\, k \times n \,\rangle = \langle\, 11 \times 15 \,\rangle$ and $\langle\, (n - k) \times n \,\rangle = \langle\, 4 \times 15 \,\rangle$, respectively.
+	
+	\item $\mathbf{G}$ and $\mathbf{H}$ have standard forms $\left[\,I_k,\:A\,\right]$ and $\left[\,A^{T},\:I_{n-k}\,\right]$, respectively.
+
+\end{enumerate}
+
+Hence we can construct the parity check matrix $\mathbf{H}$ (and $\mathbf{G}$) for the Hamming code with $r=4$ in standard form:
+
+\[
+\begin{array}{rcrllrcr}%
+\mathbf{G}&\slim=\slim&[&\mkern-14muI_k,&\mkern-12muA\mkern-14mu&]&\slim=&\slim\begin{pNiceMatrix}%
+	[margin,name=HammingGenerator,first-row,first-col,nullify-dots]
+	~     &\R{1}&\R{2}&\R{3}&\R{4}&\R{5}&\R{6}&\R{7}&\R{8}&\R{9}&\R{10}&\R{11}&\R{12}&\R{13}&\R{14}&\R{15} \\
+	\C{ 1}& \BO &  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0   &  0   &  1   &  1   &  1    &  1   \\
+	\C{ 2}&  0  & \BO &  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0   &  0   &  1   &  1   &  1    &  0   \\
+	\C{ 3}&  0  &  0  & \BO &  0  &  0  &  0  &  0  &  0  &  0  &  0   &  0   &  1   &  1   &  0    &  1   \\
+	\C{ 4}&  0  &  0  &  0  & \BO &  0  &  0  &  0  &  0  &  0  &  0   &  0   &  1   &  1   &  0    &  0   \\
+	\C{ 5}&  0  &  0  &  0  &  0  & \BO &  0  &  0  &  0  &  0  &  0   &  0   &  1   &  0   &  1    &  1   \\
+	\C{ 6}&  0  &  0  &  0  &  0  &  0  & \BO &  0  &  0  &  0  &  0   &  0   &  1   &  0   &  1    &  0   \\
+	\C{ 7}&  0  &  0  &  0  &  0  &  0  &  0  & \BO &  0  &  0  &  0   &  0   &  1   &  0   &  0    &  1   \\
+	\C{ 8}&  0  &  0  &  0  &  0  &  0  &  0  &  0  & \BO &  0  &  0   &  0   &  0   &  1   &  1    &  1   \\
+	\C{ 9}&  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0  & \BO &  0   &  0   &  0   &  1   &  1    &  0   \\
+	\C{10}&  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0  & \BO  &  0   &  0   &  1   &  0    &  1   \\
+	\C{11}&  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0  &  0   & \BO  &  0   &  0   &  1    &  1   \\
+\end{pNiceMatrix} \\
+\hspace*{4mm}\\
+\mathbf{H}&\slim=\slim&[&\mkern-14muA^{T},&\mkern-12muI_{n-k}\mkern-14mu&]&\slim=&\slim\begin{pNiceMatrix}%
+	[margin,name=HammingParityCheck,first-row,first-col,nullify-dots]
+	~     &\R{1}&\R{2}&\R{3}&\R{4}&\R{5}&\R{6}&\R{7}&\R{8}&\R{9}&\R{10}&\R{11}&\R{12}&\R{13}&\R{14}&\R{15} \\
+        \C{1}&  1  &  1  &  1  &  1  &  1  &  1  &  1  &  0  &  0  &  0   &  0   & \BO  &  0   &  0    &  0    \\
+        \C{2}&  1  &  1  &  1  &  1  &  0  &  0  &  0  &  1  &  1  &  1   &  0   &  0   & \BO  &  0    &  0    \\
+        \C{3}&  1  &  1  &  0  &  0  &  1  &  1  &  0  &  1  &  1  &  0   &  1   &  0   &  0   & \BO   &  0    \\
+        \C{4}&  1  &  0  &  1  &  0  &  1  &  0  &  1  &  1  &  0  &  1   &  1   &  0   &  0   &  0    & \BO   \\
+\end{pNiceMatrix}
+
+\end{array}\]%
+
+
 \Problem{%
 Construct a standard array for the binary linear code with generator matrix $G = \left[\begin{smallmatrix}
 	1 & 2 & 3\\
 	a & b & c
 \end{smallmatrix}\right]$. Then decode the words \texttt{11111} and \texttt{10000}.%
 }%
+
+Notes on block codes:
+
+\begin{align}
+\text{Notation:      }& \left( n, k, d \right)_{q}\\
+\text{Alphabet:      }& \Sigma\\
+\text{Codewords:     }& \mathbf{C} \subset \Sigma^{n}\\
+\text{Messages:      }& \mathbf{M} \subset \Sigma^{k}\\
+\text{Codeword Size: }& n \\
+\text{Message  Size: }& k \\
+\text{Distance:      }& d = \min\left\{ \Delta(x,y) : x,y \in \mathbf{C} x \not= y \right\}\\
+\text{Symbols:       }& q = \left\lvert\Sigma\right\rvert
+\end{align}
+
 
 \end{document}
