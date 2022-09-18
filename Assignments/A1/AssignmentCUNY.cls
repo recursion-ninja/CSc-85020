@@ -1,4 +1,4 @@
-%% CUNY-assignment.cls
+%% AssignmentCUNY
 %% Copyright 2022 Alex Washburn
 
 \LoadClass[%
@@ -30,7 +30,7 @@ numbers=noenddot
 }
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{CUNY-assignment}[2022/06/10 v1.0.0 A LaTeX style CUNY assignments]
+\ProvidesPackage{AssignmentCUNY}[2022/06/10 v1.0.0 A LaTeX style CUNY assignments]
 %\PassOptionsToPackage{utf8}{inputenc}
 %\usepackage{inputenc}
 

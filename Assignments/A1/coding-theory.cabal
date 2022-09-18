@@ -1,0 +1,99 @@
+cabal-version:      3.0
+category:           Tool
+build-type:         Simple
+name:               coding-theory
+version:            0.0.1
+
+author:             Alex Washburn
+maintainer:         github@recursion.ninja
+copyright:          Copyright (C) 2020 Alex Washburn
+homepage:           https://github.com/recursion-ninja/2022-08---CSc-85020---Coding-Theory/
+bug-reports:        https://github.com/recursion-ninja/2022-08---CSc-85020---Coding-Theory/issues
+
+synopsis:           Coding theory utilities
+
+description:        Help solving homeworks
+                    
+
+tested-with:
+  GHC==9.4.2,
+
+source-repository   head
+  type:             git
+  location:         git@github.com:recursion-ninja/2022-08---CSc-85020---Coding-Theory.git
+
+
+-- A litany of GHC warnings designed to alert us during the build of any common
+-- pitfalls, future compatibility issues, or coding conventions.
+common ghc-flags
+
+  default-language:
+    Haskell2010
+
+  ghc-options:
+    -- Usability flags
+    -fdiagnostics-color=always
+    -fhide-source-paths
+    -j
+
+    -- Optimization flags
+    -O2
+    -fexcess-precision
+    -fexpose-all-unfoldings
+    -flate-specialise
+    -fmax-simplifier-iterations=16
+    -foptimal-applicative-do
+    -fspec-constr-count=8
+    -fspec-constr-keen
+    -fspecialize-aggressively
+    -fstatic-argument-transformation
+
+    -- Sanity check warnings
+    --   1. Include all warnings by default
+--    -Weverything
+--    -Werror
+    --   2. Exclude the undesirable warnings
+    -Wno-all-missed-specialisations
+    -Wno-implicit-prelude
+    -Wno-inferred-safe-imports
+    -Wno-missed-specialisations
+    -Wno-missing-import-lists
+    -Wno-missing-safe-haskell-mode
+    -Wno-monomorphism-restriction
+    -Wno-type-defaults
+    -Wno-unsafe
+
+    -Wno-prepositive-qualified-module
+    -Wno-missing-local-signatures
+
+  if impl(ghc >= 8.10)
+    ghc-options:
+      -Wderiving-defaults
+      -Wunused-packages
+
+  if impl(ghc >=9.2)
+    ghc-options:
+      -Wno-missing-kind-signatures
+
+  if impl(ghc >=9.4)
+    ghc-options:
+      -Wredundant-strictness-flags
+
+
+library
+
+  import:
+    ghc-flags
+    
+  hs-source-dirs:
+    src
+
+  build-depends:
+    base          >= 4.8.2  && < 5,
+    containers,
+    deepseq,
+    vector,
+
+
+  exposed-modules:
+    CodingTheory

@@ -1,8 +1,7 @@
 %This is my super simple Real Analysis Homework template
 
-\documentclass{CUNY-assignment}
+\documentclass{AssignmentCUNY}
 \usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
 \usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{mathrsfs} % https://www.ctan.org/pkg/mathrsfs
@@ -38,6 +37,7 @@ Find the generator matrix of a $r$-way repetition code.%
 Suppose we have messages of length $k$, and wish to use a $r$-way repetition code to produce codewords of length $k * r$.
 The constructed generator matrix $\mathbf{G}$ will have dimensions $\langle\, k \times (k*r) \,\rangle$. We can construct $\mathbf{G}$ by concatenating $r$ identity matrices $I_{k}$. In general, the construction\footnote[2]{The diagonal $1$ values of the identity matrices are in bold face for clarity.} of $\mathbf{G}$ will take the following form:
 
+\newcommand{\CodeWord}[1]{\ensuremath{\langle\,#1\,\rangle}}
 \newcommand{\CodeSchema}[4]{\ensuremath{\boldsymbol{\bigl(\bigr.}\,#1,~#2,~#3\,\boldsymbol{\bigl.\bigr)}_{#4}}}
 \newcommand{\VD}{\Vdots}
 \newcommand{\R}[1]{\rotate~#1}
@@ -117,23 +117,68 @@ Hence we can construct the parity check matrix $\mathbf{H}$ (and $\mathbf{G}$) f
 
 \Problem{%
 Construct a standard array for the binary linear code with generator matrix $G = \left[\begin{smallmatrix}
-	1 & 2 & 3\\
-	a & b & c
+	1 & 1 & 0 & 1 & 0\\
+	0 & 1 & 0 & 1 & 0
 \end{smallmatrix}\right]$. Then decode the words \texttt{11111} and \texttt{10000}.%
 }%
 
-Notes on block codes:
+We can enumerate all codewords $\vec{c} \in \mathbf{C}$ by multiplying each message $\vec{m} \in \mathbf{M} = \mathbb{Z}_{2}^{2}$ by the generator matrix $\mathbf{G}$:
 
-\begin{align}
-\text{Notation:      }& \left( n, k, d \right)_{q}\\
-\text{Alphabet:      }& \Sigma\\
-\text{Codewords:     }& \mathbf{C} \subset \Sigma^{n}\\
-\text{Messages:      }& \mathbf{M} \subset \Sigma^{k}\\
-\text{Codeword Size: }& n \\
-\text{Message  Size: }& k \\
-\text{Distance:      }& d = \min\left\{ \Delta(x,y) : x,y \in \mathbf{C} x \not= y \right\}\\
-\text{Symbols:       }& q = \left\lvert\Sigma\right\rvert
-\end{align}
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{center}
+\begin{tabular}{ c | c }
+	$\vec{m} \in \mathbf{M}$ & $\vec{c} = \vec{m}*\mathbf{G}$ \\
+	\hline
+	\CodeWord{ 0, 0 } & \CodeWord{ 0, 0, 0, 0, 0 } \\
+	\CodeWord{ 0, 1 } & \CodeWord{ 0, 1, 0, 1, 0 } \\
+	\CodeWord{ 1, 0 } & \CodeWord{ 1, 1, 0, 1, 0 } \\
+	\CodeWord{ 1, 1 } & \CodeWord{ 1, 0, 0, 0, 0 } \\
+\end{tabular}
+\end{center}
+\endgroup
+
+
+\[ \mathbf{C} = \Bigl\{\;\; \vec{c} = \vec{m}*H \;\;|\;\; \vec{m} \in \mathbf{M} \;\;\Bigr\} = \Bigl\{\;\; \CodeWord{ 0, 0, 0, 0, 0 }, \CodeWord{ 0, 1, 0, 1, 0 }, \CodeWord{ 1, 1, 0, 1, 0 }, \CodeWord{ 1, 0, 0, 0, 0 } \;\;\Bigr\}\]
+
+Next we can construct the standard array with each column representing the coset of a codeword $\vec{c} \in \mathbf{C}$:
+
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\[
+\NiceMatrixOptions{cell-space-limits=1pt}
+\begin{pNiceArray}[t]{c|cccc}[baseline=line-3]%
+\text{Syndrome} & x + \vec{c}_{0,0} & x + \vec{c}_{0,1} & x + \vec{c}_{1,0} & x + \vec{c}_{1,1} \\
+\hline
+\C{000} & \CodeWord{ 0, 0, 0, 0, 0 } & \CodeWord{ 0, 1, 0, 1, 0 } & \CodeWord{ 1, 1, 0, 1, 0 } & \CodeWord{ 1, 0, 0, 0, 0 } \\
+\hline
+\C{001} & \CodeWord{ 0, 0, 0, 1, 0 } & \CodeWord{ 0, 1, 0, 0, 0 } & \CodeWord { 1 0 0 1 0 } & \CodeWord{ 1 1 0 0 0 } \\
+\C{010} & \CodeWord{ 0, 0, 1, 0, 0 } & \CodeWord{ 0, 1, 1, 1, 0 } & \CodeWord { 1 0 1 0 0 } & \CodeWord{ 1 1 1 1 0 } \\
+\C{011} & \CodeWord{ 0, 0, 1, 1, 0 } & \CodeWord{ 0, 1, 1, 0, 0 } & \CodeWord { 1 0 1 1 0 } & \CodeWord{ 1 1 1 0 0 } \\
+\C{100} & \CodeWord{ 0, 0, 0, 0, 1 } & \CodeWord{ 0, 1, 0, 1, 1 } & \CodeWord { 1 0 0 0 1 } & \CodeWord{ 1 1 0 1 1 } \\
+\C{101} & \CodeWord{ 0, 0, 0, 1, 1 } & \CodeWord{ 0, 1, 0, 0, 1 } & \CodeWord { 1 0 0 1 1 } & \CodeWord{ 1 1 0 0 1 } \\
+\C{110} & \CodeWord{ 0, 0, 1, 0, 1 } & \CodeWord{ 0, 1, 1, 1, 1 } & \CodeWord { 1 0 1 0 1 } & \CodeWord{ 1 1 1 1 1 } \\
+\C{111} & \CodeWord{ 0, 0, 1, 1, 1 } & \CodeWord{ 0, 1, 1, 0, 1 } & \CodeWord { 1 0 1 1 1 } & \CodeWord{ 1 1 1 0 1 } \\
+\end{pNiceArray}
+\]
+\endgroup
+
+With the standard array assembled, we can decode both the words $\CodeWord{1, 1, 1, 1, 1}$ as well as the codeword $\CodeWord{1, 0, 0, 0, 0}$ to message the (coincidentally) same message $\CodeWord{ 1, 1 }$.
+
+%Notes on block codes:
+%
+%\begin{align}
+%\text{Notation:      }& \left( n, k, d \right)_{q}\\
+%\text{Alphabet:      }& \Sigma\\
+%\text{Codewords:     }& \mathbf{C} \subset \Sigma^{n}\\
+%\text{Messages:      }& \mathbf{M} \subset \Sigma^{k}\\
+%\text{Codeword Size: }& n \\
+%\text{Message  Size: }& k \\
+%\text{Distance:      }& d = \min\left\{ \Delta(x,y) : x,y \in \mathbf{C} x \not= y \right\}\\
+%\text{Symbols:       }& q = \left\lvert\Sigma\right\rvert
+%\end{align}
 
 
 \end{document}
