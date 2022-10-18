@@ -1,0 +1,229 @@
+\documentclass{AssignmentCUNY}
+\usepackage{amsmath}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{nicematrix}
+\usepackage{graphicx}
+\usepackage{xifthen}
+\usepackage{xspace}
+
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+
+\setcounter{MaxMatrixCols}{32}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\CodeWord}[1]{\ensuremath{\langle\,#1\,\rangle}}
+\newcommand{\CodeSchema}[4]{\ensuremath{\boldsymbol{\bigl(\bigr.}\,#1,~#2,~#3\,\boldsymbol{\bigl.\bigr)}_{#4}}}
+
+\AssignmentNumber{3}%
+\CourseName{Coding Theory}
+\CourseNumber{85020}
+\StudentName{Alex Washburn}
+
+\begin{document}
+
+\CoverPage
+
+\Problem{%
+Consider an LDPC code constructed with the bipartite graph below.
+Show how the two flipped bits can be corrected.%
+}%
+\begin{figure}[h]
+	\centering
+%	\caption[Bipartite graph $\mathbf{G}$]{Bipartite graph $\mathbf{G}$ used for various codes described in problems 1 and 2 }
+	\includegraphics[width=0.25\textwidth]{bipartite-graph.png}
+\end{figure}
+
+Suppose we transmit the message $\{\;m_1,\, m_2,\, m_3,\, m_4,\, m_5\;\} = 11110$ using the LDPC code constructed from $\mathbf{G}$.
+The transmitted codeword is $\{\;m_1,\, m_2,\, m_3,\, m_4,\, m_5,\, p_1,\, p_2,\, p_3 \;\} = \CodeWord{11110000}$.
+Let the $2^{nd}$ and $5^{th}$ bits of the codeword be flipped, and the received codeword being$ \{\;m_1,\, m_2,\, m_3,\, m_4,\, m_5,\, p_1,\, p_2,\, p_3 \;\} = \CodeWord{10111000}$. To decode and correct errors, we run the LDPC graph error correction algorithm on $\CodeWord{10111000}$:
+
+\begin{enumerate}[label=\textbf{\emph{Round} \arabic*:}, leftmargin=*]
+
+\item Are there unsatisfied parity bits?
+\begin{align*}
+	0 = p_1 \not =&\; m_1 \oplus m_3 \oplus m_5 = 1 \oplus 1 \oplus 1 = 1 \\
+	0 = p_2      =&\; m_2 \oplus m_4 \oplus m_5 = 0 \oplus 1 \oplus 1 = 0 \\
+	0 = p_3 \not =&\; m_3 \oplus m_4 \oplus m_5 = 1 \oplus 1 \oplus 1 = 1
+\end{align*}
+\[
+\text{Yes, } \frac{2}{3} \text{ of parity bits unsatisfied!}
+\]
+
+\begin{enumerate}[label=\textbf{\emph{Step} \arabic*:}]
+
+\item Find a message $m_n$ bit for which more than $\frac{d}{2}$ neighbors are unsatisfied:
+\[
+\text{Bit: } m_5 = 1\text{.}
+\]
+
+\item Flip that bit:
+\[
+\text{Bit: } m_5 = 0\text{.}
+\]
+
+\end{enumerate}
+
+\item Are there unsatisfied parity bits?
+\begin{align*}
+	0 = p_1      =&\; m_1 \oplus m_3 \oplus m_5 = 1 \oplus 1 \oplus 0 = 0 \\
+	0 = p_2 \not =&\; m_2 \oplus m_4 \oplus m_5 = 0 \oplus 1 \oplus 0 = 1 \\
+	0 = p_3      =&\; m_3 \oplus m_4 \oplus m_5 = 1 \oplus 1 \oplus 0 = 0
+\end{align*}
+
+\[
+\text{Yes, } \frac{1}{3} \text{ of parity bits unsatisfied!}
+\]
+
+\begin{enumerate}[label=\textbf{\emph{Step} \arabic*:}]
+
+\item Find a message $m_n$ bit for which more than $\frac{d}{2}$ neighbors are unsatisfied:
+\[
+\text{Bit: } m_2 = 0\text{.}
+\]
+
+\item Flip that bit:
+\[
+\text{Bit: } m_2 = 1\text{.}
+\]	
+
+\end{enumerate}
+
+\item Are there unsatisfied parity bits?
+\begin{align*}
+	0 = p_1      =&\; m_1 \oplus m_3 \oplus m_5 = 1 \oplus 1 \oplus 0 = 0 \\
+	0 = p_2      =&\; m_2 \oplus m_4 \oplus m_5 = 1 \oplus 1 \oplus 0 = 0 \\
+	0 = p_3      =&\; m_3 \oplus m_4 \oplus m_5 = 1 \oplus 1 \oplus 0 = 0
+\end{align*}
+\[
+\text{No, halt and output the message } 11110\text{.}
+\]
+
+\end{enumerate}
+
+
+\Problem{%
+Consider a Tornado code constructed with the same bipartite graph.
+Show how the message with two erased symbols can be decoded.%
+}%
+
+Suppose we transmit the message $\{\;m_1,\, m_2,\, m_3,\, m_4,\, m_5\;\} = 11111$ using a Tornado code constructed from $\mathbf{G}$.
+The transmitted codeword is $\{\;m_1,\, m_2,\, m_3,\, m_4,\, m_5,\, p_1,\, p_2,\, p_3 \;\} = \CodeWord{11111111}$.
+Let the $2^{nd}$ and $5^{th}$ bits of the codeword be erased, and the received codeword being$ \{\;m_1,\, m_2,\, m_3,\, m_4,\, m_5,\, p_1,\, p_2,\, p_3 \;\} = \CodeWord{1?11?111}$. To decode and recover erasures, we run the Tornado code decoding algorithm on $\CodeWord{1?11?111}$:
+
+\begin{enumerate}[label=\textbf{\emph{Round} \arabic*:}, leftmargin=*]
+
+\item Are there any erased bits?
+\[\text{Bits: } \CodeWord{1?11?111} \]
+\[\text{Yes, } m_2 \text{ and } m_5 \text{.}\]
+
+\begin{enumerate}[label=\textbf{\emph{Step} \arabic*:}]
+	
+\item Find a parity bit such that only one of its neighbors is erased:
+\[p_1 \to m_5\]
+
+\item Fix the erased bit:
+\begin{align*}
+p_1 &= m_1 \oplus m_3 \oplus m_5 \\
+  1 &=     1 \oplus 1 \oplus m_5 \\
+  0 &=              1 \oplus m_5 \\
+  1 &= m_5
+\end{align*}
+
+\end{enumerate}
+
+\item Are there any erased bits?
+\[\text{Bits: } \CodeWord{1?111111} \]
+\[\text{Yes, } m_2 \text{.}\]
+
+\begin{enumerate}[label=\textbf{\emph{Step} \arabic*:}]
+
+\item Find a parity bit such that only one of its neighbors is erased:
+\[p_2 \to m_2\]
+
+\item Fix the erased bit:
+\begin{align*}
+p_1 &= m_2 \oplus m_4 \oplus m_5 \\
+  1 &= m_2 \oplus 1 \oplus 1 \\
+  0 &= m_2 \oplus 1 \\
+  1 &= m_2
+\end{align*}
+
+\end{enumerate}
+
+\item Are there any erased bits?
+\[\text{Bits: } \CodeWord{11111111} \]
+\[\text{No, halt and output the message } 11111\text{.}\]
+
+\end{enumerate}
+
+
+\Problem{%
+Consider an $\CodeSchema{n}{k}{n-k+1}{q}$ RS code where $q = 2^{b}$ . How many bits can there be
+at most in a decodable burst error?
+}%
+
+\newcommand{\Burst}[2]{%
+\ensuremath{\textsc{Burst}\left(\,#1,\,#2\,\right)}\xspace%
+}%
+
+Note the form of the RS code construction $\CodeSchema{n}{k}{d}{q} = \CodeSchema{n}{k}{n - k + 1}{2^b}$ implies $d = n - k + 1$.
+Recall that the number of correctable errors is equal to $\lfloor\frac{d - 1}{2}\rfloor$.
+Therefore we have the number of possible corrections equal to:
+\[
+\left\lfloor\frac{d - 1}{2}\right\rfloor = \left\lfloor\frac{n - k + 1 - 1}{2}\right\rfloor = \left\lfloor\frac{n - k}{2}\right\rfloor \;\text{ alphabet symbols} \in \Sigma
+\]
+
+The alphabet of symbols $\Sigma$ has cardinality $q = 2^{b}$.
+We can easily see this means there exists an isomorphism $\mathcal{I}$ mapping each symbol $s \in \Sigma$ to a $b$-bit binary encoding. 
+
+Let us define \Burst{e}{i} to be a ``burst error'' of $e$ consecutive bits starting at bit $i$, where the bit flips occur at bits $i + 0,\, i + 1,\, \hdots\, ,\, i + e - 1$.
+
+Suppose a message $m$ is sent with $k$ symbols from $\Sigma$ after being converted to a codeword $c$ with $n$ symbols from $\Sigma$:
+\[
+c = \{\;c_0,\, c_1,\, \hdots\,,\, c_{n-1} \;\}
+\]
+
+The codeword $c \in \Sigma^n$ can be transformed via $\mathcal{I}$ to it's binary encoding $e \in \{0,1\}^{n*b}$.
+
+\begin{align*}
+\mathcal{I}(c) &= \{\; \mathcal{I}(c_0),\, \mathcal{I}(c_1),\, \hdots\hdots\,,\, \mathcal{I}(c_{n-1}) \;\} \\
+&= \{\; e_0,\, e_1,\, \hdots\,,\, e_{b-1},\, \mathcal{I}(c_1),\, \hdots\hdots\,,\, \mathcal{I}(c_{n-1}) \;\} \\
+&= \{\; e_0,\, e_1,\, \hdots\,,\, e_{b-1},\,e_{b},\, e_{b+1},\, \hdots\,,\, e_{2b},\,
+ \hdots\hdots\,,\, \mathcal{I}(c_{n-1}) \;\} \\
+&= \{\;
+e_0,\, e_1,\, \hdots\,,\, e_{b-1},\,
+e_{b},\, e_{b+1},\, \hdots\,,\, e_{2b},\,
+\hdots\hdots\,,\, e_{(n-2)b},\, e_{(n-2)b+1},\, \hdots\,,\,e_{(n-1)*b} \;\}
+\end{align*}
+
+
+If we have \Burst{b}{i}, where $i \mod b \equiv 0$, then the $b$ errors of \Burst{b}{i} reside entirely with \emph{one} symbol in $\Sigma$ and require only \emph{one} error correction from the RS code to remedy all $b$ errors.
+However, by the pigeonhole principle, the $b+1$ errors of \Burst{b+1}{i} cannot reside in a single symbol in $\Sigma$ and requires at least two error corrections from the RC code to recover the $b+1$ errors.\\
+
+Therefore the RS code can handle at most $b * \left\lfloor\frac{n - k}{2}\right\rfloor$ error bits in a burst error.
+
+
+%Notes on block codes:
+%
+%\begin{align}
+%\text{Notation:      }& \left( n, k, d \right)_{q}\\
+%\text{Alphabet:      }& \Sigma\\
+%\text{Codewords:     }& \mathbf{C} \subset \Sigma^{n}\\
+%\text{Messages:      }& \mathbf{M} \subset \Sigma^{k}\\
+%\text{Codeword Size: }& n \\
+%\text{Message  Size: }& k \\
+%\text{Distance:      }& d = \min\left\{ \Delta(x,y) : x,y \in \mathbf{C}\;\; x \not= y \right\}\\
+%\text{Symbols:       }& q = \left\lvert\Sigma\right\rvert
+%\end{align}
+
+
+
+\end{document}

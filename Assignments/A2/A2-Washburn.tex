@@ -1,0 +1,599 @@
+%This is my super simple Real Analysis Homework template
+
+\documentclass{AssignmentCUNY}
+\usepackage{amsmath}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{nicematrix}
+\usepackage{xifthen}
+
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+
+\setcounter{MaxMatrixCols}{32}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+
+\newcommand{\Det}[1]{\ensuremath{\text{det}\left(#1\right)}}
+\newcommand{\PropSep}{\quad\!\!}
+\newcommand{\Rnn}{\ensuremath{\mathbb{R}_{n \times n}}}
+\newcommand{\Sn}{\ensuremath{\mathcal{S}_{n}}}
+\newcommand{\VD}{\Vdots}
+\newcommand{\R}[1]{\rotate~#1}
+\newcommand{\C}[1]{#1\hspace*{1mm}}
+
+\newcommand{\MCellI}[4]{\ensuremath{\sum\limits_{i=1}^{n} #1_{#3,i}*#2_{i,#4}}}%
+\newcommand{\MCellJ}[4]{\ensuremath{\sum\limits_{j=1}^{n} #1_{#3,j}*#2_{j,#4}}}%
+\newcommand{\MCellIJ}[5]{\ensuremath{\sum\limits_{i=1}^{n}(#1_{#4,i}*(\sum\limits_{j=1}^{n} #2_{i,j}*#3_{j,#5}))}}%
+\newcommand{\MCellIJD}[5]{\ensuremath{\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n} #1_{#4,i}*#2_{i,j}*#3_{j,#5}}}%
+\newcommand{\MCellJI}[5]{\ensuremath{\sum\limits_{j=1}^{n}((\sum\limits_{j=1}^{n} #1_{#4,j}*#2_{i,j})*#3_{#5,j})}}%
+
+%\newcommand{cmd}[args][default]{def}
+
+%
+\newcommand{\BO}{\ensuremath{\mathbf{1}}}
+%
+
+\newcommand{\ClosureQuantification}[1]{\ensuremath{\forall a, b \in #1}}
+\newcommand{\ClosureProperty}[2]{\ensuremath{a #1 b \in #2}}
+		
+\newcommand{\AssociativityQuantification}[1]{\ensuremath{\forall a, b, c \in #1}}
+\newcommand{\AssociativityProperty}[1]{\ensuremath{a #1 (b #1 c) = (a #1 b) #1 c}}
+
+\newcommand{\IdentityQuantification}[1]{\ensuremath{\exists e \in #1\; \forall a \in #1}}
+\newcommand{\IdentityProperty}[1]{\ensuremath{e #1 a = a = a #1 e}}
+
+\newcommand{\InverseQuantification}[1]{\ensuremath{\forall a \in #1\; \exists a^{'} \in #1}}
+\newcommand{\InverseProperty}[1]{\ensuremath{a #1 a^{'} = e = a^{'} #1 a}}
+
+
+\AssignmentNumber{2}%
+\CourseName{Coding Theory}
+\CourseNumber{85020}
+\StudentName{Alex Washburn}
+
+\begin{document}
+\CoverPage
+\Problem{%
+Show that non-singular $n \times n$ real matrices with matrix multiplication is a group.%
+}%
+
+Let $\Rnn$ be the set of (non-singular) $n \times n$ real matrices.
+
+Let us define the binary operator for matrix multiplication as $\left(\ast\right) \colon \Rnn \times \Rnn \to \Rnn$.
+
+We must show that the \emph{four} properties of an algebraic group hold for $\mathbb{R}_{n \times n}$ under $\left(\ast\right)$.\\
+
+
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+$\mathbb{R}_{n \times n}$ forms an algebraic group under $\left(\ast\right)$ if an only if:\\
+\[
+\begin{array}[t]{c|lrl}%
+\text{1} & \text{Closure:}       &       \ClosureQuantification{\Rnn} &       \ClosureProperty{\ast}{\Rnn} \\
+\text{2} & \text{Associativity:} & \AssociativityQuantification{\Rnn} & \AssociativityProperty{\ast} \\
+\text{3} & \text{Identity:}      &      \IdentityQuantification{\Rnn} &      \IdentityProperty{\ast} \\
+\text{4} & \text{Inverse:}       &       \InverseQuantification{\Rnn} &       \InverseProperty{\ast}
+\end{array}
+\]
+\endgroup\\
+
+
+\pagebreak
+\SubProblem{Closure: $\quad\ClosureQuantification{\Rnn} \quad\quad \ClosureProperty{\ast}{\Rnn}$}
+
+Consider the definition of $\left( \ast \right)$, which takes two matrices $a$ and $b$ with dimensions $x \times y$ and $y \times z$ (respectively) and produces a matrix $(a \ast b)$ with dimensions $x \times z$. Note that when $a, b \in \Rnn$ then $x = y = z = n$. Therefore, $\ClosureQuantification{\Rnn} \PropSep\ClosureProperty{\ast}{\Rnn}$
+
+	
+\SubProblem{Associativity: $\quad\AssociativityQuantification{\Rnn} \quad\quad \AssociativityProperty{\ast}$}
+
+Associativity of $\Rnn$ under $\left( \ast \right)$ ultimately follows from the associativity of the real numbers $\mathbb{R}$.
+Observe the following equalities \emph{(next page)}:
+
+
+\begin{align*}
+a \ast (b \ast c)~&=~a \ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+\MCellI{b}{c}{1}{1} & \MCellI{b}{c}{1}{2} & \Cdots & \MCellI{b}{c}{1}{n} \\
+\MCellI{b}{c}{2}{1} & \MCellI{b}{c}{2}{2} & \Cdots & \MCellI{b}{c}{2}{n} \\
+\VD                 & \VD                 & \Ddots & \VD                \\
+\MCellI{b}{c}{n}{1} & \MCellI{b}{c}{n}{2} & \Cdots & \MCellI{b}{c}{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\MCellIJ{a}{b}{c}{1}{1} & \MCellIJ{a}{b}{c}{1}{2} & \Cdots & \MCellIJ{a}{b}{c}{1}{n} \\
+\MCellIJ{a}{b}{c}{2}{1} & \MCellIJ{a}{b}{c}{2}{2} & \Cdots & \MCellIJ{a}{b}{c}{2}{n} \\
+\VD                & \VD                & \Ddots & \VD                \\
+\MCellIJ{a}{b}{c}{n}{1} & \MCellIJ{a}{b}{c}{n}{2} & \Cdots & \MCellIJ{a}{b}{c}{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\MCellIJD{a}{b}{c}{1}{1} & \MCellIJD{a}{b}{c}{1}{2} & \Cdots & \MCellIJD{a}{b}{c}{1}{n} \\
+\MCellIJD{a}{b}{c}{2}{1} & \MCellIJD{a}{b}{c}{2}{2} & \Cdots & \MCellIJD{a}{b}{c}{2}{n} \\
+\VD                & \VD                & \Ddots & \VD                \\
+\MCellIJD{a}{b}{c}{n}{1} & \MCellIJD{a}{b}{c}{n}{2} & \Cdots & \MCellIJD{a}{b}{c}{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\MCellJI{a}{b}{c}{1}{1} & \MCellJI{a}{b}{c}{1}{2} & \Cdots & \MCellJI{a}{b}{c}{1}{n} \\
+\MCellJI{a}{b}{c}{2}{1} & \MCellJI{a}{b}{c}{2}{2} & \Cdots & \MCellJI{a}{b}{c}{2}{n} \\
+\VD                      & \VD                      & \Ddots & \VD                      \\
+\MCellJI{a}{b}{c}{n}{1} & \MCellJI{a}{b}{c}{n}{2} & \Cdots & \MCellJI{a}{b}{c}{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\MCellJ{a}{b}{1}{1} & \MCellJ{a}{b}{1}{2} & \Cdots & \MCellJ{a}{b}{1}{n} \\
+\MCellJ{a}{b}{2}{1} & \MCellJ{a}{b}{2}{2} & \Cdots & \MCellJ{a}{b}{2}{n} \\
+\VD                 & \VD                 & \Ddots & \VD                \\
+\MCellJ{a}{b}{n}{1} & \MCellJ{a}{b}{n}{2} & \Cdots & \MCellJ{a}{b}{n}{n} \\
+\end{pNiceMatrix} \ast c \\
+&=~(a \ast b) \ast c \\
+\end{align*}
+
+	
+\pagebreak
+\SubProblem{Identity: $\quad\IdentityQuantification{\Rnn} \quad\quad \IdentityProperty{\ast}$}
+
+Consider the identity element:
+
+\[
+e \quad=\quad I_{n \times n} \quad=\quad \begin{pNiceMatrix}%
+[margin,name=RepetitionCode,first-row,first-col,nullify-dots]
+~   & \R 1& \R 2& \R 3& \Cdots & \R n\\
+1   & \BO &  0  &  0  & \Cdots &  0  \\
+2   &  0  & \BO &  0  & \Cdots &  0  \\
+3   &  0  &  0  & \BO & \Cdots &  0  \\
+\VD & \VD & \VD & \VD & \Ddots & \VD \\
+n   &  0  &  0  &  0  & \Cdots & \BO \\
+\end{pNiceMatrix}
+\]
+
+Observe the following equalities:
+\newcommand{\ICellR}[3]{\ensuremath{#1_{#2,#3}*1 + \sum\limits_{i\in[1,n] \setminus {#2}} #1_{#2,i}*0}}%
+\newcommand{\ICellC}[3]{\ensuremath{1*#1_{#2,#3} + \sum\limits_{i\in[1,n] \setminus {#2}} 0*#1_{#2,i}}}%
+
+\begin{align*}
+e \ast a~&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO &  0  &  0  & \Cdots &  0  \\
+0   & \BO &  0  & \Cdots &  0  \\
+0   &  0  & \BO & \Cdots &  0  \\
+\VD & \VD & \VD & \Ddots & \VD \\
+0   &  0  &  0  & \Cdots & \BO \\
+\end{pNiceMatrix} \ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} & a_{1,3} & \Cdots & a_{n,1} \\
+a_{2,1} & a_{2,2} & a_{2,3} & \Cdots & a_{n,2} \\
+a_{3,1} & a_{3,2} & a_{3,3} & \Cdots & a_{n,3} \\
+\VD     & \VD     & \VD     & \Ddots & \VD     \\
+a_{n,1} & a_{n,2} & a_{n,3} & \Cdots & a_{n,n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\ICellC{a}{1}{1} & \ICellC{a}{1}{2} & \Cdots & \ICellC{a}{1}{n} \\
+\ICellC{a}{2}{1} & \ICellC{a}{2}{2} & \Cdots & \ICellC{a}{2}{n} \\
+\VD              & \VD              & \Ddots & \VD              \\
+\ICellC{a}{n}{1} & \ICellC{a}{n}{2} & \Cdots & \ICellC{a}{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} & a_{1,3} & \Cdots & a_{n,1} \\
+a_{2,1} & a_{2,2} & a_{2,3} & \Cdots & a_{n,2} \\
+a_{3,1} & a_{3,2} & a_{3,3} & \Cdots & a_{n,3} \\
+\VD     & \VD     & \VD     & \Ddots & \VD     \\
+a_{n,1} & a_{n,2} & a_{n,3} & \Cdots & a_{n,n} \\
+\end{pNiceMatrix}\\
+&=~a \\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} & a_{1,3} & \Cdots & a_{n,1} \\
+a_{2,1} & a_{2,2} & a_{2,3} & \Cdots & a_{n,2} \\
+a_{3,1} & a_{3,2} & a_{3,3} & \Cdots & a_{n,3} \\
+\VD     & \VD     & \VD     & \Ddots & \VD     \\
+a_{n,1} & a_{n,2} & a_{n,3} & \Cdots & a_{n,n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\ICellR{a}{1}{1} & \ICellR{a}{1}{2} & \Cdots & \ICellR{a}{1}{n} \\
+\ICellR{a}{2}{1} & \ICellR{a}{2}{2} & \Cdots & \ICellR{a}{2}{n} \\
+\VD              & \VD              & \Ddots & \VD              \\
+\ICellR{a}{n}{1} & \ICellR{a}{n}{2} & \Cdots & \ICellR{a}{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO &  0  &  0  & \Cdots &  0  \\
+0   & \BO &  0  & \Cdots &  0  \\
+0   &  0  & \BO & \Cdots &  0  \\
+\VD & \VD & \VD & \Ddots & \VD \\
+0   &  0  &  0  & \Cdots & \BO \\
+\end{pNiceMatrix}\ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} & a_{1,3} & \Cdots & a_{n,1} \\
+a_{2,1} & a_{2,2} & a_{2,3} & \Cdots & a_{n,2} \\
+a_{3,1} & a_{3,2} & a_{3,3} & \Cdots & a_{n,3} \\
+\VD     & \VD     & \VD     & \Ddots & \VD     \\
+a_{n,1} & a_{n,2} & a_{n,3} & \Cdots & a_{n,n} \\
+\end{pNiceMatrix}\\
+&=~a \ast e 
+\end{align*}
+
+
+\pagebreak
+\SubProblem{Inverse: $\quad\InverseQuantification{\Rnn} \quad\quad \InverseProperty{\ast}$}
+
+Let $M_{i,j}$ be the ``minor'' of $a$,  an $(n-1) \times (n-1)$ matrix which is a copy of $a$ with row $i$ and column $j$ removed. 
+
+Let $\Det{x}$ be the determinant of $x$ where:
+
+\[
+\Det{x_{m \times m}}~=~\begin{cases}
+	a_{1,1} & \text{if } m=1\\
+	(a_{1,1}*a_{2,2}) - (a_{1,2}*a_{2,1}) & \text{if } m=2\\
+	\sum\limits_{i=1}^{m}\sum\limits_{j=1}^{m} (-1)^{i+j}a_{i,j}*\Det{M_{i,j}} & \text{otherwise }
+\end{cases}
+\]
+
+By definition, all $a \in \Rnn$ is non-singular.
+Hence, the determinant is non-zero and can be used to construct an inverse $a^{'}$ for each $a \in \Rnn$.
+Since the $\Det{x}$ is defined recursively by cases, we must show the construction of $a^{'}$ for each case.\\
+
+
+\textbf{Case 1:} Suppose that $n = 1$.
+
+Then all $a \in \mathbb{R}_{1 \times 1}$ has an inverse of the following form:
+
+\[
+a^{'}~=~\begin{pNiceMatrix}%
+	[margin,nullify-dots]
+	\frac{1}{a_{1,1}} \\
+\end{pNiceMatrix}
+\]
+
+Because $a$ is non-singular, the following equalities hold:
+
+\begin{align*}
+a \ast a^{'}~&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} \\
+\end{pNiceMatrix}\ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{1}{a_{1,1}} \\
+\end{pNiceMatrix} \\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO \\
+\end{pNiceMatrix}\\
+&=~e \\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{1}{a_{1,1}} \\
+\end{pNiceMatrix}\ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} \\
+\end{pNiceMatrix} \\&=~a^{'} \ast a
+\end{align*}\\
+
+
+
+\textbf{Case 2:} Suppose that $n = 2$.
+
+Then all $a \in \mathbb{R}_{2 \times 2}$ has an inverse of the following form:
+
+\[
+a^{'}~=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{a_{2,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{-1*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\frac{-1*a_{2,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{1,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\end{pNiceMatrix}
+\]\\
+
+Because $a$ is non-singular, the following equalities hold \emph{(next page)}:
+
+\begin{align*}
+a \ast a^{'}~&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} \\
+a_{2,1} & a_{2,2} \\
+\end{pNiceMatrix} \ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{a_{2,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{-1*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\frac{-1*a_{2,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{1,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\end{pNiceMatrix} \\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{1,2}*a_{1,1} - a_{1,1}*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\frac{a_{1,1}*a_{1,2} - a_{1,2}*a_{1,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{2,2}*a_{1,1} - a_{2,1}*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\\end{pNiceMatrix} \\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO &  0  \\
+0   & \BO \\
+\end{pNiceMatrix}\\
+&=~e \\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO &  0  \\
+0   & \BO \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{1,2}*a_{1,1} - a_{1,1}*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\frac{a_{1,1}*a_{1,2} - a_{1,2}*a_{1,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{2,2}*a_{1,1} - a_{2,1}*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\frac{a_{2,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{-1*a_{1,2}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\frac{-1*a_{2,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} & \frac{a_{1,1}}{a_{1,1}*a_{2,2} - a_{1,2}*a_{2,1}} \\
+\end{pNiceMatrix} \ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} \\
+a_{2,1} & a_{2,2} \\
+\end{pNiceMatrix} \\
+&=~a^{'} \ast a
+\end{align*}\\
+
+
+\newcommand{\CF}[2]{\ensuremath{\frac{(-1)^{#1+#2} * \Det{M_{#2,#1}}}{\Det{a}}}}
+\newcommand{\IV}[2]{\ensuremath{\sum\limits_{i=1} \frac{(-1)^{i+#2} * a_{#1,i} * \Det{M_{#2,i}}}{\Det{a}}}}
+
+\textbf{Case 3:} Suppose that $n \ge 2$.
+
+Then all $a \in \Rnn$ has an inverse of the following form:
+
+\[
+a^{'}~=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\CF{1}{1} & \CF{1}{2} & \CF{1}{3} & \Cdots & \CF{n}{1} \\
+\CF{2}{1} & \CF{2}{2} & \CF{2}{3} & \Cdots & \CF{n}{2} \\
+\CF{3}{1} & \CF{3}{2} & \CF{3}{3} & \Cdots & \CF{n}{3} \\
+\VD       & \VD       & \VD       & \Ddots & \VD       \\
+\CF{n}{1} & \CF{n}{2} & \CF{n}{3} & \Cdots & \CF{n}{n} \\
+\end{pNiceMatrix}
+\]
+
+Because $a$ is non-singular, the following equalities hold \emph{(next page)}:
+
+\begin{align*}
+a \ast a^{'}~&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} & a_{1,3} & \Cdots & a_{n,1} \\
+a_{2,1} & a_{2,2} & a_{2,3} & \Cdots & a_{n,2} \\
+a_{3,1} & a_{3,2} & a_{3,3} & \Cdots & a_{n,3} \\
+\VD     & \VD     & \VD     & \Ddots & \VD     \\
+a_{n,1} & a_{n,2} & a_{n,3} & \Cdots & a_{n,n} \\
+\end{pNiceMatrix} \ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+\CF{1}{1} & \CF{1}{2} & \CF{1}{3} & \Cdots & \CF{n}{1} \\
+\CF{2}{1} & \CF{2}{2} & \CF{2}{3} & \Cdots & \CF{n}{2} \\
+\CF{3}{1} & \CF{3}{2} & \CF{3}{3} & \Cdots & \CF{n}{3} \\
+\VD       & \VD       & \VD       & \Ddots & \VD       \\
+\CF{n}{1} & \CF{n}{2} & \CF{n}{3} & \Cdots & \CF{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\IV{1}{1} & \IV{1}{2} & \IV{1}{3} & \Cdots & \IV{n}{1} \\
+\IV{2}{1} & \IV{2}{2} & \IV{2}{3} & \Cdots & \IV{n}{2} \\
+\IV{3}{1} & \IV{3}{2} & \IV{3}{3} & \Cdots & \IV{n}{3} \\
+\VD       & \VD       & \VD       & \Ddots & \VD       \\
+\IV{n}{1} & \IV{n}{2} & \IV{n}{3} & \Cdots & \IV{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO &  0  &  0  & \Cdots &  0  \\
+0   & \BO &  0  & \Cdots &  0  \\
+0   &  0  & \BO & \Cdots &  0  \\
+\VD & \VD & \VD & \Ddots & \VD \\
+0   &  0  &  0  & \Cdots & \BO \\
+\end{pNiceMatrix}\\
+&=~e
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\BO &  0  &  0  & \Cdots &  0  \\
+0   & \BO &  0  & \Cdots &  0  \\
+0   &  0  & \BO & \Cdots &  0  \\
+\VD & \VD & \VD & \Ddots & \VD \\
+0   &  0  &  0  & \Cdots & \BO \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\IV{1}{1} & \IV{1}{2} & \IV{1}{3} & \Cdots & \IV{n}{1} \\
+\IV{2}{1} & \IV{2}{2} & \IV{2}{3} & \Cdots & \IV{n}{2} \\
+\IV{3}{1} & \IV{3}{2} & \IV{3}{3} & \Cdots & \IV{n}{3} \\
+\VD       & \VD       & \VD       & \Ddots & \VD       \\
+\IV{n}{1} & \IV{n}{2} & \IV{n}{3} & \Cdots & \IV{n}{n} \\
+\end{pNiceMatrix}\\
+&=~\begin{pNiceMatrix}%
+[margin,nullify-dots]
+\CF{1}{1} & \CF{1}{2} & \CF{1}{3} & \Cdots & \CF{n}{1} \\
+\CF{2}{1} & \CF{2}{2} & \CF{2}{3} & \Cdots & \CF{n}{2} \\
+\CF{3}{1} & \CF{3}{2} & \CF{3}{3} & \Cdots & \CF{n}{3} \\
+\VD       & \VD       & \VD       & \Ddots & \VD       \\
+\CF{n}{1} & \CF{n}{2} & \CF{n}{3} & \Cdots & \CF{n}{n} \\
+\end{pNiceMatrix} \ast \begin{pNiceMatrix}%
+[margin,nullify-dots]
+a_{1,1} & a_{1,2} & a_{1,3} & \Cdots & a_{n,1} \\
+a_{2,1} & a_{2,2} & a_{2,3} & \Cdots & a_{n,2} \\
+a_{3,1} & a_{3,2} & a_{3,3} & \Cdots & a_{n,3} \\
+\VD     & \VD     & \VD     & \Ddots & \VD     \\
+a_{n,1} & a_{n,2} & a_{n,3} & \Cdots & a_{n,n} \\
+\end{pNiceMatrix}\\
+&=~a^{'} \ast a \\
+\end{align*}
+
+
+
+\Problem{%
+Given two permutations $\bigl[ 0 \mapsto 1,\, 1 \mapsto 2,\, 2 \mapsto 0 \bigr]$ and $\bigl[ 0 \mapsto 1,\, 1 \mapsto 0,\, 2 \mapsto 2 \bigr]$, their composition is another permutation $\bigl[ 0 \mapsto 0,\, 1 \mapsto 2,\, 2 \mapsto 1 \bigr]$.\\[5mm]
+Show that permutations over $n$ elements with composition is a group.
+}%
+
+Let $\Sn$ be the set of permutations on $n$ elements.
+
+Let us define the binary operator for permutation composition as $\left(\ast\right) \colon \Sn \times \Sn \to \Sn$.
+
+We must show that the \emph{four} properties of an algebraic group hold for $\Sn$ under $\left(\ast\right)$.\\
+
+
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+$\Sn$ forms an algebraic group under $\left(\ast\right)$ if an only if:\\
+\[
+\begin{array}[t]{c|lrl}%
+	\text{1} & \text{Closure:}       &       \ClosureQuantification{\Sn} &       \ClosureProperty{\circ}{\Sn} \\
+	\text{2} & \text{Associativity:} & \AssociativityQuantification{\Sn} & \AssociativityProperty{\circ} \\
+	\text{3} & \text{Identity:}      &      \IdentityQuantification{\Sn} &      \IdentityProperty{\circ} \\
+	\text{4} & \text{Inverse:}       &       \InverseQuantification{\Sn} &       \InverseProperty{\circ}
+\end{array}
+\]
+\endgroup\\
+
+\newcommand{\Nn}{\ensuremath{\mathbb{N}_{n}}}
+\newcommand{\Homo}[1]{\ensuremath{\textsc{t}\left(#1\right)}}
+\newcommand{\HomoI}[1]{\ensuremath{\textsc{t}^{'}\left(#1\right)}}
+
+First, we will establish a key relationship:
+
+Let $\Nn = \left\{ x : x \in \mathbb{N} \text{ and } x < n\right\} \subset \mathbb{N}$.
+Let $\textsc{t}\colon \Sn \to \left(\Nn \to \Nn\right)$ be the bijective function uniquely mapping an element of $\Sn$ and to a bijective function mapping elements from $\Nn$ onto itself.
+Note $\Sn$ and $\left\{ \Homo{x} : x \in \Sn \right\}$ are homomorphic with $\textsc{t}$ and its inverse $\textsc{t}^{'}$ mapping between the two sets.
+
+
+\SubProblem{Closure: $\quad\ClosureQuantification{\Sn}\quad\quad\ClosureProperty{\ast}{\Sn}$}
+
+Let $a$ and $b$ be permutations from $\Sn$.
+We will use the properties of function composition $\left(\circ\right)$ to derive that $a \ast b$ is closed. 
+This can be illustrated via lambda calculus:
+
+\begin{align*}
+a \ast b~&=~\HomoI{\Homo{a \ast b}} \\
+&=~\HomoI{\Homo{a} \circ \Homo{b}} \\
+&=~\HomoI{(\lambda_{1}\colon \Nn \to \Nn) \circ (\lambda_{2}\colon \Nn \to \Nn)} \\
+&=~\HomoI{\lambda_{3}\colon \Nn \to \Nn} \\
+\end{align*}
+
+We know that $\HomoI{\lambda_{3}} \in \Sn$ by the definition of the homomorphic mapping of $\textsc{t}$ and $\textsc{t}^{'}$.
+Therefore, $a \ast b \in \Sn$.
+
+
+\SubProblem{Associativity: $\quad\AssociativityQuantification{\Sn}\quad\quad\AssociativityProperty{\ast}$}
+
+Similarly to closure, associativity of $\left(\ast\right)$ can be easily derived from the associativity of function composition and the homomorphism $\textsc{t}$.
+
+\begin{align*}
+a \ast (b \ast c)~&=~\HomoI{\Homo{a \ast (b \ast c)}} \\
+&=~\HomoI{\Homo{a} \circ \Homo{b \ast c}} \\
+&=~\HomoI{\Homo{a} \circ (\Homo{b} \circ \Homo{c})} \\
+&=~\HomoI{(\Homo{a} \circ \Homo{b}) \circ \Homo{c}} \\
+&=~\HomoI{(\Homo{a \ast b}) \circ \Homo{c}} \\
+&=~\HomoI{\Homo{(a \ast b) \ast c}} \\
+&=~(a \ast b) \ast c \\
+\end{align*}
+
+
+\SubProblem{Identity: $\quad\IdentityQuantification{\Sn}\quad\quad\IdentityProperty{\ast}$}
+
+Let $e = \bigl[0 \mapsto 0,\, 1 \mapsto 1,\, \hdots \,,\, n-1 \mapsto n-1,\, n \mapsto n \bigr]$
+
+Observe the following equalities:
+
+\begin{align*}
+e \ast a~&=~\bigl[0 \mapsto 0,\, 1 \mapsto 1,\, \hdots \,,\, n \mapsto n \bigr] \ast \bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \\
+&=~\bigl[(0 \mapsto 0) \circ (0 \mapsto x_0),\, (1 \mapsto 1) \circ (1 \mapsto x_1),\,  \hdots \,,\, (n \mapsto n) \circ (n \mapsto x_n) \bigr] \\
+&=~\bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \\
+&=~a \\
+&=~\bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \\
+&=~\bigl[(0 \mapsto x_0) \circ (0 \mapsto 0),\, (1 \mapsto x_1) \circ (1 \mapsto 1),\, \hdots \,,\, (n \mapsto x_n) \circ (n \mapsto n) \bigr] \\
+&=~\bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \ast \bigl[0 \mapsto 0,\, 1 \mapsto 1,\, \hdots \,,\, n \mapsto n \bigr] \\
+&=~a \ast e
+\end{align*}
+
+
+\SubProblem{Inverse: $\quad\InverseQuantification{\Sn}\quad\quad\InverseProperty{\ast}$}
+
+For each $a = \bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \in \Sn$ we can construct its inverse $a^{'}$ in the following form:
+
+\[
+a^{'} = \bigl[x_0 \mapsto 0,\, x_1 \mapsto 1,\, \hdots \,,\, x_n \mapsto n \bigr]
+\]
+
+Observe the following equalities:
+
+\begin{align*}
+a \ast a^{'}~&=~\bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \ast \bigl[x_0 \mapsto 0,\, x_1 \mapsto 1,\, \hdots \,,\, x_n \mapsto n \bigr] \\
+&=~\bigl[(0 \mapsto x_0) \circ (x_0 \mapsto 0),\, (1 \mapsto x_1) \circ (x_1 \mapsto 1),\, \hdots \,,\, (n \mapsto x_n) \circ (x_n \mapsto n) \bigr] \\
+&=~\bigl[0 \mapsto 0,\, 1 \mapsto 1,\, \hdots \,,\, n \mapsto n \bigr] \\
+&=~e \\
+&~=\bigl[0 \mapsto 0,\, 1 \mapsto 1,\, \hdots \,,\, n \mapsto n \bigr] \\
+&=~\bigl[(x_0 \mapsto 0) \circ (0 \mapsto x_0),\, (x_1 \mapsto 1) \circ (1 \mapsto x_1),\, \hdots \,,\, (x_n \mapsto n) \circ (n \mapsto x_n) \bigr] \\
+&=~\bigl[0 \mapsto x_0,\, 1 \mapsto x_1,\, \hdots \,,\, n \mapsto x_n \bigr] \ast \bigl[x_0 \mapsto 0,\, x_1 \mapsto 1,\, \hdots \,,\, x_n \mapsto n \bigr] \\
+&=~a^{'} \ast a
+\end{align*}
+
+\Problem{%
+Show that $\mathcal{P}(x) = x^4 + x^3 + x^2 + x + 1$ is an irreducible polynomial for $\mathbb{F}_{2}\left[x\right]$.
+}%
+
+Use Sturm's theorem to count the number of roots of $\mathcal{P}(x)$ by constructing the Sturm sequence for $\mathcal{P}(x)$. The number of roots will equal to the difference in number of sign changes when evaluating the Sturm sequence for $\mathcal{P}(x)$ at $-\infty$ and $+\infty$.\\
+
+Strum sequence for a polynomial $\textsc{p}$ has the form:
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\[
+\begin{NiceArray}{ll}%
+[margin,nullify-dots]
+\textsc{p}_{0}(x) =& \textsc{p}(x) \\
+\textsc{p}_{1}(x) =& \textsc{p}_{0}^{'}(x) \\
+\textsc{p}_{i}(x) =& -1 *\text{rem}\left(\dfrac{\textsc{p}_{(i-2)}(x)}{\textsc{p}_{(i-1)}(x)}\right) \end{NiceArray}
+\]
+\endgroup
+
+
+
+Strum sequence of $\mathcal{P}(x)$:
+\begingroup
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+\renewcommand{\arraystretch}{2} % Default value: 1
+\[
+\begin{NiceArray}{lrr}
+p_{0}(x) =& \mathcal{P}(x) =& x^4 +  x^3 +  x^2 +  x + 1 \\
+p_{1}(x) =& p_{0}^{'}(x)   =&       4x^3 + 3x^2 + 2x + 1 \\
+p_{2}(x) =& -1 *\text{rem}\left(\dfrac{p_{0}(x)}{p_{1}(x)}\right) =&  \dfrac{-5}{16}x^2 - \dfrac{5}{8}x - \dfrac{15}{16} \\
+p_{3}(x) =& -1 *\text{rem}\left(\dfrac{p_{1}(x)}{p_{2}(x)}\right) =& -16
+\end{NiceArray}
+\]
+\endgroup
+
+
+Sign sequences derived from the Strum sequence of $\mathcal{P}(x)$ evaluated at $-\infty$ and $+\infty$:
+\[
+\left\{\; p_{0}(-\infty),\,  p_{1}(-\infty),\, p_{2}(-\infty),\, p_{3}(-\infty) \;\right\} = \left\{\; +,\, -,\, -,\, - \;\right\}
+\]
+\[
+\left\{\; p_{0}(+\infty),\,  p_{1}(+\infty),\, p_{2}(+\infty),\, p_{3}(+\infty) \;\right\} = \left\{\; +,\, +,\, -,\, - \;\right\}
+\]
+
+Variation in sign $V(-\infty) = 1$ when evaluating the sequence at $-\infty$, notably between $p_{0}\left(-\infty\right)$ and $p_{1}\left(-\infty\right)$.
+
+Variation in sign $V(+\infty) = 1$ when evaluating the sequence at $+\infty$, notably between $p_{1}\left(-\infty\right)$ and $p_{2}\left(-\infty\right)$.
+
+The difference in sign variation is $V(-\infty) - V(+\infty) = 1 - 1 = 0$.
+Hence there are no real-valued roots of $\mathcal{P}(x)$ in the interval $(-\infty, +\infty]$.
+It also follows immediately that there are no factors of $\mathcal{P}(x)$ in $\mathbb{R}\left[x\right]$.
+Note that $\{0,1\} \subset \mathbb{R}$ and that the field $\mathbb{F}_{2}\left[x\right]$ is a subspace of $\mathbb{R}\left[x\right]$.
+Since the field $\mathbb{F}_{2}\left[x\right]$ is a more constrained domain than $\mathbb{R}\left[x\right]$, this result is stronger actually than what was required!
+Therefore $\mathcal{P}(x)$ is an irreducible polynomial for $\mathbb{F}_{2}\left[x\right]$ \emph{and} $\mathbb{R}\left[x\right]$.
+
+
+\end{document}
