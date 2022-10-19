@@ -44,9 +44,6 @@ presentation-target := $(presentation-name).$(extension-portabledoc)
 slides-filename := slides.md
 slides-filepath := $(dir-slides-source)$(slides-filename)
 
-latexmk-flag-list = \
-  -output-directory="$(dir $(presentation-target))"
-
 pandoc-flag-list = \
   --columns=50 \
   --dpi=300 \
@@ -70,12 +67,22 @@ pandoc-flag-list = \
   --variable=theme:"Rochester" \
   --variable=toc:true
 
-latexmk-options := $(subst $(SPACE),$(row-delimiter),$(latexmk-flag-list))
 pandoc-options  := $(subst $(SPACE),$(row-delimiter),$(pandoc-flag-list))
 
-artifact-exts := aux fdb_latexmk fls log nav snm tex toc vrb
-#artifact-file := $(addprefix $(presentation-name).,$(artifact-exts))
-artifact-list := $(subst $(SPACE),$(row-delimiter),$(strip $(foreach ext,$(artifact-exts),$(wildcard $(presentation-name).$(ext)))))
+latexmk_accounted_exts := aux fdb_latexmk fls log toc vrb
+latexmk_leftover_exts  = $(sort acn glg loc nav snm soc synctex.gz thm $(extension-latex))
+latexmk_leftover_list  = $(subst $(SPACE),$(row-delimiter),$(strip $(foreach ext,$(latexmk_leftover_exts),\
+  $(wildcard $(presentation-name).$(ext)))))
+
+artifact-exts := $(sort \
+  $(latexmk_accounted_exts) \
+  $(latexmk_leftover_exts) \
+  $(extension-latex) \
+  $(extension-portabledoc) \
+  )
+
+artifact-list := $(subst $(SPACE),$(row-delimiter),$(strip $(foreach ext,$(artifact-exts),\
+  $(wildcard $(presentation-name).$(ext)))))
 
 #######
 ###
@@ -124,4 +131,5 @@ $(presentation-latex): $(slides-filepath)
 
 $(presentation-target): $(presentation-latex)
 	latexmk -pdf $<
-
+	latexmk -c
+	-rm -f $(latexmk_leftover_list)
