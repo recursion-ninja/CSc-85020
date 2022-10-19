@@ -4,8 +4,6 @@
 ###
 #######
 
-.ONESHELL:
-.DEFAULT:;
 SHELL := /bin/sh
 COMMA := ,
 EMPTY :=
@@ -34,7 +32,7 @@ dir-slides-source     ?= ./
 ###
 #######
 
-row-delimiter := $(SPACE)\$(NEWLINE)$(SPACE)$(SPACE)$(SPACE)$(SPACE)
+row-delimiter := $(SPACE)\$(NEWLINE)$(SPACE)$(SPACE)$(SPACE)$(SPACE)$(SPACE)$(SPACE)
 
 resource-filepath := $(dir-slides-source)assets/
 
@@ -65,7 +63,7 @@ pandoc-flag-list = \
   --variable=classoption:"aspectratio=169" \
   --variable=colortheme:"orchid" \
   --variable=fontsize:11pt \
-  --variable=institute:"Hunter College, CUNY" \
+  --variable=institute:"Graduate Center, CUNY" \
   --variable=lang:en-US \
   --variable=linkstyle:bold \
   --variable=section-titles:false \
@@ -75,12 +73,9 @@ pandoc-flag-list = \
 latexmk-options := $(subst $(SPACE),$(row-delimiter),$(latexmk-flag-list))
 pandoc-options  := $(subst $(SPACE),$(row-delimiter),$(pandoc-flag-list))
 
-artifact-list := \
-  $(addprefix $(presentation-name).,nav snm) \
-  $(presentation-target) \
-  $(presentation-latex)
-artifact-rows := $(subst $(SPACE),$(row-delimiter),$(artifact-list))
-
+artifact-exts := aux fdb_latexmk fls log nav snm tex toc vrb
+#artifact-file := $(addprefix $(presentation-name).,$(artifact-exts))
+artifact-list := $(subst $(SPACE),$(row-delimiter),$(strip $(foreach ext,$(artifact-exts),$(wildcard $(presentation-name).$(ext)))))
 
 #######
 ###
@@ -88,7 +83,7 @@ artifact-rows := $(subst $(SPACE),$(row-delimiter),$(artifact-list))
 ###
 #######
 
-.PHONY: all clean distclean install installdirs pdf
+.PHONY: all clean install installdirs pdf
 
 all:: $(presentation-target)
 
@@ -111,15 +106,14 @@ pdf:: $(presentation-target)
 presentation: $(presentation-target)
 
 presentation-clean:
-#	( cd $(dir $(presentation-latex)); latexmk -CA; )
-	-rm -f$(row-delimiter)$(artifact-rows)
+	-rm -f $(artifact-list)
+	$(if $(wildcard $(presentation-target)),$(shell rm -f $(presentation-target)))
 
 #######
 ###
 #   Build Targets
 ###
 #######
-
 
 $(presentation-latex): $(slides-filepath)
 	pandoc \
@@ -129,19 +123,5 @@ $(presentation-latex): $(slides-filepath)
 	sed -i 's/<\.->/<\.->\[frame\]/g' $@
 
 $(presentation-target): $(presentation-latex)
-	( latexmk \
-	    -pdf \
-	    $< ; \
-	  cp \
-	    $(subst $(extension-latex),$(extension-portabledoc),$(presentation-latex)) \
-	    $@ ; \
-	)
-
-#$(presentation-target): $(slides-filepath) $(dir $(presentation-target))
-#	( cd $(dir-slides-source); \
-	pandoc \
-	  $(pandoc-options) \
-	  --output=$@ \
-	  $< ; \
-	)
+	latexmk -pdf $<
 
