@@ -128,7 +128,7 @@ What is **not** of a sensor "Sensor Network?"
 What are sinks in a sensor "Sensor Network?"
 
 - Sinks are not persistent in the network
-- Sinks transit throught the network
+- Sinks transit through the network
 - "Pull-based" data flow
 
 ::::
@@ -191,7 +191,7 @@ Example: Battlefield sensor network
 - Battlefield sensors collecting inelligence
 - Enemy has abundance of artillery
 - Enamy shells portion of battlefield
-- Carfully retreive data from surviving nodes
+- Carfully retrieve data from surviving nodes
 - Reliably recover as much data as possible
 
 ::::
@@ -256,10 +256,10 @@ Sensor network as persistent storage
 Random walks
 
 - Encoded blocks broadcasted into network
-- Encoded blocks have appened source ID
+- Encoded blocks have appended source ID
 - Routing follows a random walk
 - Each receiving node caches encoded blocks
-- Walk length depends on newtork size
+- Walk length depends on network size
 
 ::::
 
@@ -321,7 +321,7 @@ Compute transition matrix
 - Use Metropolis algorithm
 - Use steady state distribution
 - Each row needs local information
-- Table construction is distrubted
+- Table construction is distributed
 ::::
 
 ::: {.column width="57%"}
@@ -409,7 +409,7 @@ Each node *independently*:
 
 ## Algorithm 
 
-- Decod using Belief Propogation algorithm
+- Decod using Belief Propagation algorithm
 - Similar to LT codes
 
 
@@ -460,8 +460,26 @@ As walk length increases converges to other codes
 
 ## Conclusion
 
-**Thank you**
+:::::::::::::: {.columns align=top}
+::: {.column width="50%"}
+\
+**Thank you!**
+\
+\
+\
+\
+\
+\
+Slides are publicly available [^3]
+::::
 
+::: {.column width="50%"}
+\
 **Questions?**
+::::
+::::::::::::::
+
+[^3]: [https://github.com/recursion-ninja/CSc-85020/tree/master/Presentation](https://github.com/recursion-ninja/CSc-85020/tree/master/Presentation)
+
 
 ## References {.allowframebreaks}
