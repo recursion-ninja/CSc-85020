@@ -1,0 +1,136 @@
+Cabal-Version: 3.8
+Name:          pop-count-synthesis
+Version:       0.1.0
+Stability:     Stable
+Build-Type:    Simple
+
+Author:        Alex Washburn <github@recursion.ninja>
+Copyright:     (c) 2015-2022 Alex Washburn
+License:       CC-BY-SA-4.0
+License-File:  doc/LICENSE
+
+Maintainer:    Alex Washburn <github@recursion.ninja>
+Homepage:      https://recursion.ninja
+Bug-Reports:   https://github.com/recursion-ninja/personal-website
+
+Synopsis:      Synthesizing "population count" algorithms
+Description:   Defines a routine for synthesizing an algorithm parameterized by \(d\),
+               which computes the number of set bits in a bit-vector of fixed length \(d\).
+               This opperation is often refer to as "population count" or "PopCount."
+               Resulting synthesized algorithm(s) utilize "bit-twiddling" techniques.
+Category:
+    Bits
+
+Tested-With:
+    GHC == 9.4.3
+
+Extra-Doc-Files:
+    doc/CHANGELOG.md
+    doc/README.md
+
+
+Common build-configuration
+
+  default-language:
+    GHC2021
+
+  ghc-options:
+    -- Usability flags
+    -fdiagnostics-color=always
+    -fhide-source-paths
+    -threaded
+
+    -- Optimization flags
+    -fexcess-precision
+    -fexpose-all-unfoldings
+    -flate-specialise
+    -fmax-simplifier-iterations=16
+    -foptimal-applicative-do
+    -fspec-constr-count=8
+    -fspec-constr-keen
+    -fspecialize-aggressively
+    -fstatic-argument-transformation
+
+    -- Sanity check warnings
+    --   1. Include all warnings by default
+    -Weverything
+    --   2. Exclude the undesirable warnings
+    -Wno-all-missed-specialisations
+    -Wno-implicit-prelude
+    -Wno-missing-import-lists
+    -Wno-missing-safe-haskell-mode
+    -Wno-monomorphism-restriction
+    -Wno-type-defaults
+    -Wno-unsafe
+
+  if impl(ghc >=9.2)
+    ghc-options:
+      -Wno-missing-kind-signatures
+
+  if impl(ghc >=9.4)
+    ghc-options:
+      -Wredundant-strictness-flags
+
+
+Library
+
+  import:
+    build-configuration
+
+  build-depends:
+    base >= 4.14 && < 5,
+    pop-count-synthesis:bit-vector,
+
+    deepseq      >= 1.4.6,
+    exceptions,                    
+    hashable     >= 1.3,
+    integer-gmp  >= 1.1,
+    mtl          >= 2.2.2,
+    primitive    >= 0.7.2,
+    transformers >= 0.5.6.2,
+
+  hs-source-dirs:
+    src
+
+  other-modules:
+    Abstract.Machine
+    Synthesis.PopCount
+
+  visibility:
+    public
+
+
+Library bit-vector
+
+  import:
+    build-configuration
+
+  exposed-modules:
+    Data.BitVector
+--    Data.BitVector.Sized
+
+  other-modules:
+    Data.BitVector.Internal
+--    Data.BitVector.Sized.Internal
+--    Data.BitVector.Sized.Panic
+--    Data.BitVector.Sized.Signed
+--    Data.BitVector.Sized.Unsigned
+--    Data.BitVector.Sized.Overflow
+
+  build-depends:
+    base         >= 4.11 && <5,
+--    bitwise >= 1.0.0 && < 1.1,
+--    bytestring >= 0.10 && < 0.12,
+    deepseq      >=1.4.6,
+    hashable     >=1.3,
+    integer-gmp  >=1.1,
+    primitive    >=0.7.2,
+--    panic >= 0.4.0 && < 0.5,
+--    random >= 1.2.0 && < 1.3,
+--    th-lift >= 0.8.1 && < 0.9
+
+  hs-source-dirs:
+    src
+
+  visibility:
+    private

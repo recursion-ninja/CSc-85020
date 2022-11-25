@@ -20,38 +20,38 @@ toc=numberline,
 numbers=noenddot
 ]{scrreprt}%
 
-\usepackage{geometry}
-\geometry{
-	a4paper,
-	bottom=20mm,
-	left=20mm,
-	right=20mm,
-	top=20mm
-}
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{AssignmentCUNY}[2022/06/10 v1.0.0 A LaTeX style CUNY assignments]
 %\PassOptionsToPackage{utf8}{inputenc}
 %\usepackage{inputenc}
+\RequirePackage{geometry}
+\geometry{%
+a4paper,
+bottom=20mm,
+left=20mm,
+right=20mm,
+top=20mm
+}
+
 
 %----------------------------- CUNY Assignment variables -------------------------
-\global\let\@AssignmentNumber\@empty
-\global\let\@CourseName\@empty
-\global\let\@CourseNumber\@empty
-\global\let\@StudentName\@empty
-\global\let\@StudentNumber\@empty
+\global\let\VarAssignmentNumber\empty%
+\global\let\VarCourseName\empty%
+\global\let\VarCourseNumber\empty%
+\global\let\VarStudentName\empty%
+\global\let\VarStudentNumber\empty%
 
-\global\let\AssignmentNumber\relax
-\global\let\CourseName\relax
-\global\let\CourseNumber\relax
-\global\let\StudentName\relax
-\global\let\StudentNumber\relax
+\global\let\VarAssignmentNumber\relax
+\global\let\VarCourseName\relax
+\global\let\VarCourseNumber\relax
+\global\let\VarStudentName\relax
+\global\let\VarStudentNumber\relax
 
-\def \AssignmentNumber#1{\def\@AssignmentNumber{#1}}
-\def \CourseName#1{\def\@CourseName{#1}}
-\def \CourseNumber#1{\def\@CourseNumber{#1}}
-\def \StudentName#1{\def\@StudentName{#1}}
-\def \StudentNumber#1{\def\@StudentNumber{#1}}
+\def\AssignmentNumber#1{\def\VarAssignmentNumber{#1}}
+\def\CourseName#1{\def\VarCourseName{#1}}
+\def\CourseNumber#1{\def\VarCourseNumber{#1}}
+\def\StudentName#1{\def\VarStudentName{#1}}
+\def\StudentNumber#1{\def\VarStudentNumber{#1}}
 %----------------------------- CUNY Assignment variables -------------------------
 
 
@@ -66,7 +66,7 @@ numbers=noenddot
 
 
 %----------------------------- Modify paragraph format -------------------------
-\newlength\savedparfillskip
+\newlength\savedparfillskip%
 \newcommand*{\saveparfillskip}[1]{\setlength{\savedparfillskip}{\dimexpr\parfillskip\relax}}
 \AddtoDoHook{heading/postinit/chapter}{\saveparfillskip}
 \renewcommand{\chapterlinesformat}[3]{%
@@ -86,43 +86,6 @@ numbers=noenddot
 
 
 %----------------------------- Update sectioning -------------------------------
-%\usepackage{xpatch}
-%\usepackage{tikz}
-
-%\RedeclareSectionCommand[
-%font=\mdseries\Large,%
-%%prefixfont=\LARGE,%
-%expandtopt,%
-%%innerskip=1\baselineskip%
-%]{section}
-%\renewcommand*{\sectionformat}{%
-%	\tikz[remember picture]\node[inner ysep=0pt,inner xsep=.5em](sectionnumber)
-%	{{\MakeUppercase{\}\nobreakspace{\Huge\thesection\autodot}}};%
-%}
-%
-%\xapptocmd{\sectionheadstartvskip}{%
-%	\ifunnumbered{section}
-%	{\tikz[remember picture]\coordinate(sectionstart);\\*[1.5\baselineskip]}
-%	{}%
-%}{}{}
-%\xpretocmd{\sectionheadendvskip}{%
-%	\vspace*{.5\baselineskip}%
-%	\noindent\ifnumbered{section}
-%	{\tikz[remember picture,overlay]\draw(sectionnumber)-|(0,0)--+(\textwidth,0)|-(sectionnumber);}
-%	{\tikz[remember picture,overlay]\draw(sectionstart)-|(0,0)--+(\textwidth,0)|-(sectionstart);}%
-%}{}{}
-
-%\titleformat{\section}[runin]{\LARGE\bfseries}{Problem~\arabic{section}:}{3pt}{}[]
-%\titleformat{\section}[display]{\normalfont\huge\bfseries}
-%{\filcenter\underline{\MakeUppercase{Problem}~\arabic{section}}}
-%{20pt}{\Huge}%
-%\titleformat{\section}[frame]
-%{\normalfont}
-%{\filright
-%	\footnotesize
-%	\enspace SECTION \thesection\enspace}
-%{8pt}
-%{\Large\bfseries\filcenter}
 \usepackage{longfbox}
 \usepackage{changepage}
 
@@ -142,7 +105,7 @@ padding-bottom=6mm
 \raggedsection#3~\\[2mm]\Large\textbf{#4}%
 \end{longfbox}%
 \end{adjustwidth}%
-}{\@hangfrom{\hskip #2#3}{#4}}
+}{\hangfrom{\hskip #2#3}{#4}}
 }
 
 \addtokomafont{disposition}{\normalfont}
@@ -162,23 +125,23 @@ padding-bottom=6mm
 
 
 %--------------------------------- Internal commands ---------------------------
-\newcommand{\CourseTitle}{CSc~\@CourseNumber~--~\@CourseName}
-\newcommand{\AssignmentTitle}{Assignment~\textnumero\@AssignmentNumber}
+\newcommand{\CourseTitle}{CSc~\VarCourseNumber~--~\VarCourseName}
+\newcommand{\AssignmentTitle}{Assignment~\textnumero\VarAssignmentNumber}
 \newcommand{\HomeworkText}[1]{\textbf{``#1''}}
 
-\renewcommand{\maketitle}{
+\renewcommand{\maketitle}{%
 \thispagestyle{empty}
 \parindent=0pt
 \KOMAoptions{fontsize=12pt}
 \begin{center}
-\singlespacing
+\singlespacing%
 ~\vfill
 \Huge\CourseTitle\\[1cm]
 \AssignmentTitle\normalsize\\[1cm]
 by\\[1cm]
-\Large\@StudentName\normalsize\\[1cm]
+\Large\VarStudentName\normalsize\\[1cm]
 on\\[1cm]
-\Large\today\\[1cm]
+\Large\today\\[1cm]%
 ~\vfill
 \end{center}
 \KOMAoptions{fontsize=10pt}
@@ -187,13 +150,13 @@ on\\[1cm]
 
 
 %--------------------------------- Exported Commands ---------------------------
-\newcommand{\CoverPage}{
+\newcommand{\CoverPage}{%
 \begin{titlepage}
-	% Always use Arabic numbering, even in Front-matter
-	\setcounter{page}{1}
-	\pagenumbering{arabic}
-	\maketitle
-	\doublespacing
+% Always use Arabic numbering, even in Front-matter
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\maketitle%
+\doublespacing%
 \end{titlepage}
 }
 
